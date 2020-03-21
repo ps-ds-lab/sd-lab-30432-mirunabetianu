@@ -23,17 +23,27 @@
         <Content Remove="$(SpaRoot)**" />
         <Content Include="ClientApp\src\assets\.DS_Store" />
         <Content Include="ClientApp\src\assets\olx-logo.svg" />
+        <Content Include="ClientApp\src\components\custom-button\custom-button.component.jsx" />
+        <Content Include="ClientApp\src\components\custom-button\custom-button.styles.jsx" />
+        <Content Include="ClientApp\src\components\form-input\form-input.component.jsx" />
+        <Content Include="ClientApp\src\components\form-input\form-input.styles.scss" />
         <Content Include="ClientApp\src\components\header\header.component.jsx" />
         <Content Include="ClientApp\src\components\header\header.styles.scss" />
+        <Content Include="ClientApp\src\components\sign-in\sign-in.component.jsx" />
+        <Content Include="ClientApp\src\components\sign-in\sign-in.styles.scss" />
+        <Content Include="ClientApp\src\components\sign-up\sign-up.component.jsx" />
+        <Content Include="ClientApp\src\components\sign-up\sign-up.styles.scss" />
+        <Content Include="ClientApp\src\pages\contact\contact.component.jsx" />
+        <Content Include="ClientApp\src\pages\contact\contact.styles.scss" />
+        <Content Include="ClientApp\src\pages\explore\explore.component.jsx" />
+        <Content Include="ClientApp\src\pages\explore\explore.styles.scss" />
         <Content Include="ClientApp\src\pages\homepage\homepage.component.jsx" />
         <Content Include="ClientApp\src\pages\homepage\homepage.styles.scss" />
-        <None Remove="$(SpaRoot)**" />
-        <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+        <Content Include="ClientApp\src\pages\sign-in-and-up\sign-in-and-up.component.jsx" />
+        <Content Include="ClientApp\src\pages\sign-in-and-up\sign-in-and-up.styles.scss" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Remove="WeatherForecast.cs" />
-    </ItemGroup>
+
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
         <!-- Ensure Node.js is installed -->

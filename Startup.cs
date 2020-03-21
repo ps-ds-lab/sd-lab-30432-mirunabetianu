@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SD_Project.Models;
 
 namespace SD_Project
 {
@@ -21,9 +23,12 @@ namespace SD_Project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
+            services.AddDbContext<OlxDatabaseContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("OlxDatabase")));
+            services.AddMvc()
+                .AddControllersAsServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

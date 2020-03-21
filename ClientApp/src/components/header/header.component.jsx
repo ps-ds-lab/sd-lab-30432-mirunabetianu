@@ -12,9 +12,15 @@ const Header = () => (
             <Logo className='logo'/>
         </Link>
         <div className='options'>
-            <div className='option'>SHOP</div>
-            <div className='option'>CONTACT</div>
-            <div className='option'>SIGN IN</div>
+            <Link className='link-container' to="/explore">
+                <div className='option'>EXPLORE</div>
+            </Link>
+            <Link className='link-container' to="/contact">
+                <div className='option'>CONTACT</div>
+            </Link>
+            <Link className='link-container' to="/signin">
+                <div className='option'>MY ACCOUNT</div>
+            </Link>
         </div>
     </div>
 );

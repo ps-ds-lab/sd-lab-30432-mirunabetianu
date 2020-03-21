@@ -10,6 +10,15 @@
     width: 120px;
     padding: 25px;
   }
+  
+  .link-container {
+    text-decoration:none;
+    color: black;
+    &:hover{
+      color: rgb(239,129,50);
+    }
+    
+  }
 
   .options {
     margin-top: 10px;
