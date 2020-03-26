@@ -33,8 +33,8 @@ namespace SD_Project.Models
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
         public DbSet<Admin> Admins { get; set; }
-        public DbSet<Seller> Sellers { get; set; }
-        public DbSet<Buyer> Buyers { get; set; }
+        public DbSet<Advertiser> Advertisers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Category> Categories { get; set; }

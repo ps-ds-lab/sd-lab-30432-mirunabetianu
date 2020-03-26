@@ -19,41 +19,41 @@ namespace SD_Project.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Buyer>>> GetBuyer()
+        public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            return await _context.Buyers.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Buyer>> GetBuyer(int id)
+        public async Task<ActionResult<User>> GetUser(int id)
         {
-            var buyer = await _context.Buyers.FindAsync(id);
-            if (buyer == null)
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return buyer;
+            return user;
         }
 
         
         [HttpPost]
-        public async Task<ActionResult<Buyer>> PostBuyer(Buyer buyer)
+        public async Task<ActionResult<User>> PostBuyer(User user)
         {
-            _context.Buyers.Add(buyer);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("", new {id = buyer.Id}, buyer);
+            return CreatedAtAction("", new {id = user.Id}, user);
         }
         
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBuyer(int id, Buyer buyer)
+        public async Task<IActionResult> PutBuyer(int id, User user)
         {
-            if (id != buyer.Id)
+            if (id != user.Id)
                 return BadRequest();
 
-            _context.Entry(buyer).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -67,9 +67,9 @@ namespace SD_Project.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Buyer>> DeleteBuyer(int id)
+        public async Task<ActionResult<User>> DeleteUser(int id)
         {
-            var buyer = await _context.Buyers.FindAsync(id);
+            var buyer = await _context.Users.FindAsync(id);
            
             if (buyer == null)
             {

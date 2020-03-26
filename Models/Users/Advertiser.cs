@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using SD_Project.Models.Storage;
+using System.Numerics;
 
 namespace SD_Project.Models.Users
 {
-    public class Buyer
+    public class Advertiser
     {
         public int Id { get; set; }
         public string Username { get; set; }
@@ -12,6 +11,5 @@ namespace SD_Project.Models.Users
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        
     }
 }
