@@ -2,7 +2,7 @@
 
 namespace SD_Project.Migrations
 {
-    public partial class TablesProperties : Migration
+    public partial class AddTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,7 +21,7 @@ namespace SD_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Buyers",
+                name: "Advertisers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -35,7 +35,7 @@ namespace SD_Project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Buyers", x => x.Id);
+                    table.PrimaryKey("PK_Advertisers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,7 +86,7 @@ namespace SD_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sellers",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -100,7 +100,7 @@ namespace SD_Project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sellers", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
         }
 
@@ -110,7 +110,7 @@ namespace SD_Project.Migrations
                 name: "Admins");
 
             migrationBuilder.DropTable(
-                name: "Buyers");
+                name: "Advertisers");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -122,7 +122,7 @@ namespace SD_Project.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Sellers");
+                name: "Users");
         }
     }
 }

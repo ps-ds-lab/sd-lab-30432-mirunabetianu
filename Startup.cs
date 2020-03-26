@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SD_Project.Model;
 using SD_Project.Models;
 
 namespace SD_Project
@@ -25,9 +26,9 @@ namespace SD_Project
             services.AddControllersWithViews();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
-            services.AddDbContext<OlxDatabaseContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("OlxDatabase")));
-            services.AddMvc()
+             services.AddDbContext<OlxDatabaseContext>(options =>
+                 options.UseSqlServer(Configuration.GetConnectionString("OlxDatabase")));
+             services.AddMvc()
                 .AddControllersAsServices();
         }
 

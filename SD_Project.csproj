@@ -41,6 +41,7 @@
         <Content Include="ClientApp\src\pages\homepage\homepage.styles.scss" />
         <Content Include="ClientApp\src\pages\sign-in-and-up\sign-in-and-up.component.jsx" />
         <Content Include="ClientApp\src\pages\sign-in-and-up\sign-in-and-up.styles.scss" />
+        <Content Remove="Model\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -50,8 +51,18 @@
       <_ContentIncludedByDefault Remove="Models\Pages\_ViewImports.cshtml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Model\**" />
+    </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Remove="Model\**" />
+    </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Model\**" />
+    </ItemGroup>
+    
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
         <!-- Ensure Node.js is installed -->
         <Exec Command="node --version" ContinueOnError="true">

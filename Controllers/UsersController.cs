@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SD_Project.Model;
 using SD_Project.Models;
 using SD_Project.Models.Users;
 
@@ -9,11 +10,11 @@ namespace SD_Project.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BuyersController: ControllerBase
+    public class UsersController: ControllerBase
     {
         private readonly OlxDatabaseContext _context;
 
-        public BuyersController(OlxDatabaseContext context)
+        public UsersController(OlxDatabaseContext context)
         {
             _context = context;
         }
@@ -38,7 +39,7 @@ namespace SD_Project.Controllers
 
         
         [HttpPost]
-        public async Task<ActionResult<User>> PostBuyer(User user)
+        public async Task<ActionResult<User>> PostUser(User user)
         {
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -48,7 +49,7 @@ namespace SD_Project.Controllers
         
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBuyer(int id, User user)
+        public async Task<IActionResult> PutUser(int id, User user)
         {
             if (id != user.Id)
                 return BadRequest();
@@ -77,7 +78,7 @@ namespace SD_Project.Controllers
             }
             _context.Entry(buyer).State = EntityState.Deleted;
             
-            _context.Buyers.Remove(buyer);
+            _context.Users.Remove(buyer);
             await _context.SaveChangesAsync();
 
             return buyer;

@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SD_Project.Models;
+using SD_Project.Model;
 
 namespace SD_Project.Migrations
 {
     [DbContext(typeof(OlxDatabaseContext))]
-    [Migration("20200321180508_TablesProperties")]
-    partial class TablesProperties
+    [Migration("20200325173809_AddTables")]
+    partial class AddTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,7 +107,7 @@ namespace SD_Project.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("SD_Project.Models.Users.Buyer", b =>
+            modelBuilder.Entity("SD_Project.Models.Users.Advertiser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,10 +134,10 @@ namespace SD_Project.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Buyers");
+                    b.ToTable("Advertisers");
                 });
 
-            modelBuilder.Entity("SD_Project.Models.Users.Seller", b =>
+            modelBuilder.Entity("SD_Project.Models.Users.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -164,7 +164,7 @@ namespace SD_Project.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sellers");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
