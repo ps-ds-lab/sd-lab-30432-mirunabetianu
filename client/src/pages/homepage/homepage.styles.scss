@@ -1,0 +1,12 @@
+.homepage-container {
+  display: flex;
+  flex-direction: column;
+  margin: 10% 15% 0 20%;
+
+  
+  .items{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 30px;
+  }
+}
