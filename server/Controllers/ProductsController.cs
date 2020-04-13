@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SD_Project.server.Models;
@@ -22,22 +26,21 @@ namespace SD_Project.server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            return await _context.Products.ToListAsync();
+            var url = Request.GetDisplayUrl();
+            var myUri = new Uri(url);
+            var param1 = HttpUtility.ParseQueryString(myUri.Query).Get("categoryId");
+            if(param1 == null)
+                return await _context.Products.ToListAsync();
+
+            var id = int.Parse(param1);
+            
+            var category = await _context.Categories.FindAsync(id);
+
+            if (category == null) return NotFound();
+            
+            return _context.Products.Where(product => product.ProductCategoryId == id).ToList();
         }
 
-        [HttpGet("{id}", Name="GetProduct")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
-        {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return product;
-        }
-
-        
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
@@ -83,6 +86,5 @@ namespace SD_Project.server.Controllers
 
             return product;
         }
-        
     }
 }

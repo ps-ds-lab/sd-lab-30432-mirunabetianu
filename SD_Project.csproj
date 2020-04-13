@@ -46,7 +46,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="server" />
+      <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Properties\launchSettings.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="client\src\pages\admin\ceva.component.jsx" />
+      <None Remove="client\src\components\product-preview\product-preview.container.jsx" />
     </ItemGroup>
     
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

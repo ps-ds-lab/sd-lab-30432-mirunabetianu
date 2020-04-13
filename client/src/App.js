@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 
 import './App.css'
 
@@ -12,49 +12,50 @@ import Contact from "./pages/contact/contact.component";
 import Explore from "./pages/explore/explore.component";
 import Admin from "./pages/admin/admin.component";
 import Advertiser from "./pages/advertiser/advertiser.component";
+import ProductPage from "./pages/product-page/product-page.component";
 
-import { selectCurrentUser } from './redux/user/user.selectors';
 import {createStructuredSelector} from "reselect";
-import {setCurrentUser} from "./redux/user/user.actions";
 
-class App extends React.Component {
+import {selectCurrentUser} from './redux/user/user.selectors';
+import {checkUserSession} from './redux/user/user.actions';
 
-    componentDidMount() {
-        const { setCurrentUser } = this.props;
+const App = ({currentUser, checkUserSession}) => {
 
-        const token = localStorage.getItem("token");
-        console.log(token);
-
-        token ? setCurrentUser(token) : setCurrentUser();
-    }
+    useEffect( () => {
+        checkUserSession();
+    },[checkUserSession]);
     
-    render() {
-        
-       return(
-           <div>
-               <Header/>
+    return (
+        <div>
+            <Header/>
 
-               <Switch>
-                   <Route exact path="/" component={Homepage}/>
-                   <Route exact path='/signin' render= {()=> this.props.currentUser ? (<Redirect to='/'/>): (<SignInAndOut/>)}/>
-                   <Route path="/contact" component={Contact}/>
-                   <Route path="/explore" component={Explore}/>
-                   <Route path="/admin" component={Admin}/>
-                   <Route path="/advertiser" component={Advertiser}/>
-               </Switch>
+            <Switch>
+                <Route exact path="/" component={Homepage}/>
+                <Route exact path='/signin'
+                       render={() => currentUser ? (<Redirect to='/'/>) : (<SignInAndOut/>)}/>
+                <Route path="/contact" component={Contact}/>
+                <Route path="/explore" component={Explore}/>
+                <Route path="/admin" component={Admin}/>
+                <Route path="/advertiser" component={Advertiser}/>
+                <Route path="/product" render={() => currentUser ? (<ProductPage/>) : (<Redirect to='/'/>)}/>
+            </Switch>
 
-           </div>
-       );
-   }
+        </div>
+    );
    
-}
+
+};
+
 
 const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser,
+    currentUser: selectCurrentUser
 });
 
 const mapDispatchToProps = dispatch => ({
-    setCurrentUser: user => dispatch(setCurrentUser(user))
+    checkUserSession: () => dispatch(checkUserSession())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App);

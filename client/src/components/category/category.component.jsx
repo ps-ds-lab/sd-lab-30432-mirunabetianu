@@ -1,16 +1,23 @@
 import React from 'react';
 
+import {withRouter} from "react-router";
+
 import './category.styles.scss';
 
-export const Category = (props) => (
-    <div className='category-container'>
-        
-        <div className='image-container'>
-            <img className='category-image' alt='icon' src={props.url}/>
+const Category = ({imageUrl, name,history,match}) => {
+    
+    return (
+        <div className='category-container' onClick={() => history.push(`${match.url}${name}`)}>
+
+            <div className='image-container'>
+                <img className='category-image' alt='icon' src={imageUrl}/>
+            </div>
+
+            <div className='p-container'>
+                <span>{name}</span>
+            </div>
         </div>
-       
-        <div className='p-container'>
-            <span>{props.children}</span>
-        </div>
-    </div>
-);
+    );
+};
+
+export default withRouter(Category);

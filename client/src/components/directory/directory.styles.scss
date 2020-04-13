@@ -1,0 +1,9 @@
+.directory-container{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+  justify-content: space-between;
+  margin-top: 5%;
+  margin-left: 17%;
+}

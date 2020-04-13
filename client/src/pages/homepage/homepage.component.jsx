@@ -1,45 +1,24 @@
-import React from 'react';
-import {Category} from "../../components/category/category.component";
-import axios from 'axios';
+import React, {useEffect} from 'react';
 
 import './homepage.styles.scss';
+import Directory from "../../components/directory/directory.component";
+import {fetchCategoriesStart} from "../../redux/directory/directory.actions";
+import {connect} from "react-redux";
 
-class Homepage extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            categories: []
-        }
-    }
+const Homepage = ({fetchCategoriesStart}) => {
+    useEffect(() =>
+       { fetchCategoriesStart();
+    },[fetchCategoriesStart]);
     
-    componentDidMount() {
-        const self = this;
-        axios.get("https://localhost:5001/api/categories")
-            .then(function (response) {
-                console.log(response.data);
-                self.setState({categories: response.data});
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-    
-    render() {
-        return (
-            <div className='homepage-container'>
-                <div className='items'>
-                    {
-                        this.state.categories.map(
-                            category => <Category key={category.id} url={category.imageUrl} >{category.name}</Category>
-                        )
-                    }
-                </div>
-            </div>
-        );
-    }
-}
-    
+    return (
+        <div className='homepage-container'>
+            <Directory/>
+        </div>
+    );
+};
 
+const mapDispatchToProps = dispatch => ({
+    fetchCategoriesStart: () => dispatch(fetchCategoriesStart())
+});
 
-export default Homepage;
+export default connect(null,mapDispatchToProps)(Homepage);
