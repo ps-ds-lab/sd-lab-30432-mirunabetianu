@@ -9,7 +9,7 @@ namespace SD_Project.server.Models.Storage
         public string Description { get; set; }
         public int Rating { get; set; }
         public string ImageUrl { get; set; }
-        public int SellerId { get; set; }
         public int ProductCategoryId { get; set; }
+        public string Seller { get; set; }
     }
 }

@@ -1,24 +1,24 @@
 import React from 'react';
-import CollectionPreview from "../collection-preview/collection-preview.component";
 import {createStructuredSelector} from "reselect";
-import {selectCollectionsFromSection} from "../../redux/directory/directory.selectors";
+import {selectDirectorySections} from "../../redux/directory/directory.selectors";
 import {connect} from "react-redux";
+import CollectionPreview from "../collection-preview/collection-preview.component";
 
-const CollectionsOverview = ({products}) => {
+import './collections-overview.styles.scss';
+
+const CollectionsOverview = ({sections}) => {
     return (
         <div className='product-overview-container'>
-            {/*{products.map(*/}
-            {/*    ({id, ...otherProductProps}) => */}
-            {/*        <CollectionPreview key = {id} {...otherProductProps}/>*/}
-            {/*)}*/}
-            {console.log(products(1))}
+            {sections.map(({ id, ...otherCollectionProps }) => (
+                <CollectionPreview key={id} {...otherCollectionProps} />
+            ))}
         </div>
     );
 };
 
-
-const mapStateToProps = createStructuredSelector({
-    products: id => selectCollectionsFromSection(id)
-});
+const mapStateToProps = () => {
+    return createStructuredSelector({
+    sections: selectDirectorySections,
+})};
 
 export default connect(mapStateToProps)(CollectionsOverview);

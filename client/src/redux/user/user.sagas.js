@@ -20,6 +20,10 @@ function* signIn({ payload: { username, password }}) {
             username: username,
             password: password
         };
+        localStorage.setItem("username", authentication.username);
+        localStorage.setItem("password", authentication.password);
+        
+        console.log(localStorage.getItem("password"));
 
         let user = yield call(signInApi,authentication);
 
@@ -36,8 +40,13 @@ function* onSignInStart() {
 }
 
 function* isUserAuthenticated() {
+    const payload = {
+        username: localStorage.getItem("username"),
+        password: localStorage.getItem("password")
+    };
+    console.log(payload);
     localStorage.getItem("token") ?
-        yield put(signInSuccess())
+        yield put(signInSuccess(payload.username))
         :
         yield put(signInFailure('no user found'));
 }

@@ -7,25 +7,23 @@ import {connect} from 'react-redux';
 
 import CollectionItem from '../../components/collection-item/collection-item.component';
 import {selectCollectionsFromSection} from "../../redux/directory/directory.selectors";
-import {createStructuredSelector} from "reselect";
 
-const CollectionPage = ({collection}) => {
-    const {title, items} = collection;
+const CollectionPage = ({section}) => {
+    const {name,products} = section;
     return(
         <div className='collection-page'>
-            <h2 className={title}>{title}</h2>
+            <h2 className='title'>{name}</h2>
             <div className='items'>
                 {
-                    items.map(item => <CollectionItem key={item.id} product={item}/>)
+                    products.map(item => (<CollectionItem key={item.id} product={item}/>))
                 }
             </div>
         </div>
     );
 };
 
-export const mapStateToProps = createStructuredSelector({
-    collection: id => selectCollectionsFromSection(id)
+const mapStateToProps = (state, ownProps) =>({
+    section: selectCollectionsFromSection(ownProps.match.params.categoryId)(state)
 });
-
 
 export default connect(mapStateToProps)(CollectionPage);

@@ -1,18 +1,20 @@
 import {createSelector} from 'reselect';
 
-const selectDirectory = state => state.directory;
+export const selectDirectory = state => state.directory;
 
-export const selectDirectorySection = createSelector(
+export const selectDirectorySections = createSelector(
     [selectDirectory],
     directory => directory.sections
 );
 
-export const selectCollectionsFromSection = categoryId => createSelector(
-    [selectDirectorySection],
-    sections => sections ? sections[categoryId].products : null
-);
+export const selectCollectionsFromSection = id => {
+    return createSelector(
+        [selectDirectorySections],
+        collections => collections ? Object.keys(collections).map(key => collections[key].name.toLowerCase() === id? collections[key]: null).filter(col => col !== null).pop() : null
+    )
+};
 
-export const isCollectionFetching = createSelector(
+export const selectIsCollectionFetching = createSelector(
     [selectDirectory],
     directory => directory.isFetching
 );
@@ -20,4 +22,9 @@ export const isCollectionFetching = createSelector(
 export const selectIsCollectionsLoaded = createSelector(
     [selectDirectory],
     directory => !!directory.sections
+);
+
+export const selectDirectoryAds = createSelector(
+    [selectDirectory],
+    directory => directory.ads
 );

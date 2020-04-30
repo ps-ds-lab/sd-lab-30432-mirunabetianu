@@ -7,7 +7,7 @@ namespace SD_Project.server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "SellerId",
+                name: "Seller",
                 table: "Products",
                 nullable: false,
                 defaultValue: 0);
@@ -16,7 +16,7 @@ namespace SD_Project.server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "SellerId",
+                name: "Seller",
                 table: "Products");
         }
     }

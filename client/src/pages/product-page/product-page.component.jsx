@@ -1,106 +1,136 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import './product-page.styles.scss';
 import FormInput from "../../components/form-input/form-input.component";
 import CustomButton from "../../components/custom-button/custom-button.component";
-import axios from "axios";
+import {createStructuredSelector} from "reselect";
+import {selectDirectorySections} from "../../redux/directory/directory.selectors";
+import {connect} from "react-redux";
+import Dropdown from 'react-bootstrap/Dropdown'
+import {DropdownItem} from "react-bootstrap";
+import {selectCurrentUser} from "../../redux/user/user.selectors";
+import {addProduct} from "../../redux/directory/directory.actions";
 
-class ProductPage extends React.Component{
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            name: '',
-            price: '',
-            description: '',
-            imageUrl: '',
-        }
-    }
+const ProductPage = ({sections, currentUser, addProduct}) => {
+    const [product, setProduct] = useState({
+        name: '',
+        price: '',
+        description: '',
+        imageUrl: '',
+        productCategoryId: 0,
+        seller: currentUser.username
+    });
+    
+    const [message, setMessage] = useState({msg:'Select Category'});
 
-    handleSubmit = async event => {
+    const handleSubmit = async event => {
         event.preventDefault();
-
-        const {name, price, description, imageUrl} = this.state;
         
-        const product = {
-            Name: name,
-            Price: parseInt(price),
-            Description: description,
-            Rating: 0,
-            ImageUrl: imageUrl,
-            ProductCategory: 0,
-            SellerId: 0
-        };
-
-        axios.post('https://localhost:5001/api/products', product)
-             .then(res => {
-                 console.log(res);
-                 console.log(res.data);
-                 alert("Product added successfully!")
-             })
-             .catch(error => {
-                 console.log(error.response);
-             });
-
+        let x = product.price;
+        product.price = parseInt(x);
+        
+        addProduct(product);
+        
+        console.log(product);
     };
 
-    handleChange = event => {
-        const {value,name} = event.target;
+    const handleChange = event => {
+        const {value, name} = event.target;
 
-        this.setState({[name]: value})
+        setProduct({ ...product, [name]: value})
     };
     
-    render() {
-        return(
-          <div className='product-page-container'>
-              <div className='title-container'>
-                  <h2>Add a product</h2>
-                  <h3>Fill in the form below if you have anything to sell</h3>
-                  <span>All the information is regarding the product</span>
-              </div>
-              <form onSubmit={this.handleSubmit}>
-                  <FormInput
-                      type='text'
-                      name="name"
-                      value={this.state.name}
-                      required
-                      handleChange={this.handleChange}
-                      label="Name"
-                  >
-                  </FormInput>
-
-                  <FormInput
-                      type='number'
-                      name="price"
-                      value={this.state.price}
-                      required
-                      handleChange={this.handleChange}
-                      label="Price">
-                  </FormInput>
-
-                  <FormInput
-                      type='text'
-                      name="description"
-                      value={this.state.description}
-                      required
-                      handleChange={this.handleChange}
-                      label="Brief description">
-                  </FormInput>
-                  <FormInput
-                      type='text'
-                      name="imageUrl"
-                      value={this.state.imageUrl}
-                      required
-                      handleChange={this.handleChange}
-                      label="Image URL">
-                  </FormInput>
-                  <div className='buttons'>
-                      <CustomButton type='submit'>SUBMIT</CustomButton>
-                  </div>
-              </form>
-          </div>  
+    const handleDropdown = event => {
+        const selected_message = {
+            msg: event.target.textContent.substring(0,event.target.textContent.length-1 )
+        };
+        
+        setMessage(selected_message);
+        
+        let id = 0;
+        sections.forEach(
+            section => section.name === selected_message.msg ? id = section.id: null
         );
-    }
+        
+        setProduct({...product, productCategoryId: id})
+    };
+
+    const {name, price, description, imageUrl} = product;
+    const {msg} = message;
+
+    return (
+        <div className='product-page-container'>
+            <div className='title-container'>
+                <h2>Add a product</h2>
+                <h3>Fill in the form below if you have anything to sell</h3>
+                <span>All the information is regarding the product</span>
+            </div>
+            <form className='form-container' onSubmit={handleSubmit}>
+                <FormInput
+                    type='text'
+                    name="name"
+                    value={name}
+                    required
+                    handleChange={handleChange}
+                    label="Name"
+                >
+                </FormInput>
+
+                <FormInput
+                    type='number'
+                    name="price"
+                    value={price}
+                    required
+                    handleChange={handleChange}
+                    label="Price">
+                </FormInput>
+
+                <FormInput
+                    type='text'
+                    name="description"
+                    value={description}
+                    required
+                    handleChange={handleChange}
+                    label="Brief description">
+                </FormInput>
+                <FormInput
+                    type='text'
+                    name="imageUrl"
+                    value={imageUrl}
+                    required
+                    handleChange={handleChange}
+                    label="Image URL">
+                </FormInput>
+                <div>
+                    <Dropdown  className='dropdown-container'>
+                        <Dropdown.Toggle variant="secondary" id="dropdown-basic"  className='dropdown-container'>
+                            {msg}
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu  className='dropdown-container'>
+                            {
+                                sections.map(
+                                    section => <DropdownItem id="selected-item" key={section.id} onClick={handleDropdown}>{section.name} </DropdownItem>
+                                )
+                            }
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
+                <div className='buttons'>
+                    <CustomButton type='submit'>SUBMIT</CustomButton>
+                </div>
+            </form>
+        </div>
+    );
 }
 
-export default ProductPage;
+const mapStateToProps = createStructuredSelector({
+    sections: selectDirectorySections,
+    currentUser: selectCurrentUser
+});
+
+const mapDispatchToProps = dispatch => ({
+   addProduct: product => dispatch(addProduct(product)) 
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(ProductPage);

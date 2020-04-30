@@ -4,10 +4,10 @@ import {withRouter} from "react-router";
 
 import './category.styles.scss';
 
-const Category = ({imageUrl, name,history,match}) => {
-    
+const Category = ({imageUrl, name,history}) => {
+    const linkUrl = `explore/${name.toLowerCase()}`;
     return (
-        <div className='category-container' onClick={() => history.push(`${match.url}${name}`)}>
+        <div className='category-container' onClick={() => history.push(linkUrl)}>
 
             <div className='image-container'>
                 <img className='category-image' alt='icon' src={imageUrl}/>
