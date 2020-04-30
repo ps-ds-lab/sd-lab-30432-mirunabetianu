@@ -23,9 +23,14 @@ The administrator can perform the following operations:
 * Give restriction to the salesman's announcements
 * Give recommandations to the buyer based on his/her wishlist
 
-## Implementation tasks
+## Implementation steps
 
 - [x] UML class diagrams and database structure
 - [x] connection to the database (dbcontext, migrations)
 - [x] REST APIs 
-- [ ] to be completed...
+- [x] frontend-backend communication through APIs
+- [x] added components, pages on frontend
+- [x] refactoring (added react-redux, redux-saga and react-hooks) 
+- [ ] implement factory method design pattern
+- [ ] add more functionalities to the backend: rating calculator and report generator
+- [ ] introduction of web sockets
