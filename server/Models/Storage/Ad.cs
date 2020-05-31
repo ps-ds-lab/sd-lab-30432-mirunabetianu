@@ -4,7 +4,7 @@ namespace SD_Project.server.Models.Storage
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string imageUrl { get; set; }
-        public string linkUrl { get; set; }
+        public string ImageUrl { get; set; }
+        public string LinkUrl { get; set; }
     }
 }

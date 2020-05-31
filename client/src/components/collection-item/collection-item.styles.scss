@@ -31,5 +31,17 @@
     justify-content: center;
     font-size: 18px;
     font-weight: 500;
+    
+    .button{
+      margin-left:25%;
+      margin-top: 2%;
+      color:white;
+      background: #37a745;
+    }
   }
+  
+  .rating-dropdown-container{
+    width: 100%;
+  }
+  
 }

@@ -35,22 +35,56 @@ namespace SD_Project.server.Controllers
         public async Task<ActionResult<bool>> ValidateUser(Authentication authentication)
         {
             var existing = false;
-            string password = null;
+            var password = "pass";
             var id = 0;
-            foreach(var user in _context.Users)
-            {
-                if (!user.Username.Equals(authentication.Username)) continue;
-                existing = true;
-                password = user.Password;
-                id = user.Id;
-                break;
-            }
             
-            await _context.SaveChangesAsync();
-            
-            var response =  BCrypt.Net.BCrypt.Verify(authentication.Password, password);
+            Console.WriteLine(authentication.Role);
 
-            return !response || !existing ? (ActionResult<bool>) NotFound() : Ok(new {token = GenerateToken(id)});
+            switch (authentication.Role)
+            {
+                case "admin": 
+                    foreach(var user in _context.Admins)
+                    {
+                        if (!user.Username.Equals(authentication.Username)) continue;
+                        existing = true;
+                        password = user.Password;
+                        id = user.Id;
+                        break;
+                    }
+                    await _context.SaveChangesAsync();
+
+                    return  !(password.Equals(authentication.Password) && existing) ? (ActionResult<bool>) NotFound() : Ok(new {mode = "admin"});
+                case "advertiser":
+                    foreach(var user in _context.Advertisers)
+                    {
+                        if (!user.Username.Equals(authentication.Username)) continue;
+                        existing = true;
+                        password = user.Password;
+                        id = user.Id;
+                        break;
+                    }
+                    await _context.SaveChangesAsync();
+                    
+                    Console.WriteLine(password);
+
+                    return  !(password.Equals(authentication.Password) && existing) ? (ActionResult<bool>) NotFound() : Ok(new {mode = "advertiser"});
+                case "user":
+                    foreach(var user in _context.Users)
+                    {
+                        if (!user.Username.Equals(authentication.Username)) continue;
+                        existing = true;
+                        password = user.Password;
+                        id = user.Id;
+                        break;
+                    }
+                    var response =  BCrypt.Net.BCrypt.Verify(authentication.Password, password);
+                    
+                    await _context.SaveChangesAsync();
+
+                    return !response || !existing ? (ActionResult<bool>) NotFound() : Ok(new {token = GenerateToken(id)});
+            }
+
+            return Ok();
         }
         
         public string GenerateToken(int userId)

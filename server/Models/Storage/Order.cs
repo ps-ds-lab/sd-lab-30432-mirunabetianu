@@ -5,7 +5,8 @@ namespace SD_Project.server.Models.Storage
         public int Id { get; set; }
         public int Total { get; set; }
         
-        public int OrderBuyerId { get; set; }
-        public int OrderProductId { get; set; }
+        public string OrderBuyerId { get; set; }
+        public string OrderProductId { get; set; }
+        public string OrderSellerId { get; set; }
     }
 }

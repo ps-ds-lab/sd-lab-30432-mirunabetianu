@@ -57,6 +57,10 @@ namespace SD_Project.server.Controllers
             if (id != product.Id)
                 return BadRequest();
 
+            var rating = 0;
+
+            Console.WriteLine(rating);
+            
             _context.Entry(product).State = EntityState.Modified;
 
             try

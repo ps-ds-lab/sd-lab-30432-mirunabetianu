@@ -13,7 +13,7 @@ import {connect} from "react-redux";
 import {signInStart} from '../../redux/user/user.actions';
 
 const SignIn = ({signInStart}) => {
-    const [user, setUser] = useState({username: '', password: ''});
+    const [user, setUser] = useState({username: '', password: '',role:'user'});
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -28,7 +28,6 @@ const SignIn = ({signInStart}) => {
 
         setUser({ ...user, [name]: value });
     };
-
     const {username, password} = user;
 
     return (
@@ -69,7 +68,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    signInStart: (username, password) => dispatch(signInStart(username,password))
+    signInStart: (username, password,role) => dispatch(signInStart(username,password,role))
 });
 
 

@@ -33,7 +33,7 @@ const Header = ({currentUser,signOutStart}) => (
             </div>
             <div className='link-container'>
                 {
-                    currentUser ?
+                    currentUser && currentUser.role === 'user'?
                         (<Link className='link-container' to="/product">ADD PRODUCT</Link>)
                         :
                         null

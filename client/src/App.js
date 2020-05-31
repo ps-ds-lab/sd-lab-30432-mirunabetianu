@@ -18,6 +18,8 @@ import {createStructuredSelector} from "reselect";
 
 import {selectCurrentUser} from './redux/user/user.selectors';
 import {checkUserSession} from './redux/user/user.actions';
+import AdvertiserPage from "./pages/settings-advertiser-page/settings-advertiser-page";
+import AdminPage from "./pages/settings-admin-page/settings-admin-page.component";
 
 const App = ({currentUser, checkUserSession}) => {
 
@@ -33,8 +35,10 @@ const App = ({currentUser, checkUserSession}) => {
                 <Route path="/signin" render={() => currentUser ? (<Redirect to='/'/>) : (<SignInAndOut/>)}/>
                 <Route path="/contact" component={Contact}/>
                 <Route path="/explore" component={Explore}/>
-                <Route path="/admin" component={Admin}/>
-                <Route path="/advertiser" component={Advertiser}/>
+                <Route path="/admin" render={() => currentUser ? (<Redirect to='/settings-admin'/>) : (<Admin/>)}/>
+                <Route path="/advertiser" render={() => currentUser ? (<Redirect to='/settings-advertiser'/>) : (<Advertiser/>)}/>
+                <Route path="/settings-advertiser" render={() => currentUser ?  (<AdvertiserPage/>):(<Redirect to='/'/>)}/>
+                <Route path="/settings-admin" render={() => currentUser ?  (<AdminPage/>):(<Redirect to='/'/>)}/>
                 <Route path="/product" render={() => currentUser ? (<ProductPage/>) : (<Redirect to='/'/>)}/>
             </Switch>
 

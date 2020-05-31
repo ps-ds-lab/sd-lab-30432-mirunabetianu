@@ -1,73 +1,67 @@
-import React from 'react';
+import React,{useState} from 'react';
 
 import './advertiser.styles.scss';
 import FormInput from "../../components/form-input/form-input.component";
 import CustomButton from "../../components/custom-button/custom-button.component";
+import {signInStart} from "../../redux/user/user.actions";
+import {connect} from "react-redux";
+import {createStructuredSelector} from "reselect";
+import {selectCurrentUser} from "../../redux/user/user.selectors";
 
-class Advertiser extends React.Component{
-    constructor(props)
-    {
-        super(props);
+const Advertiser = ({signInStart}) => {
+    const [advertiser,setAdvertiser] = useState({username:'',password:'',role:'advertiser'});
 
-        this.state = {
-            email: '',
-            password: ''
-        }
-    }
-
-    handleSubmit = async event => {
+    const handleSubmit = async event => {
         event.preventDefault();
-
-        const {email, password} = this.state;
-
-        try{
-            console.log(email + ' ' + password);
-        }catch(error)
-        {
-            console.log(error);
-        }
-
-        this.setState({email: '', password: ''})
+        signInStart(advertiser);
     };
 
-    handleChange = event => {
-        const {value,name} = event.target;
+    const handleChange = event => {
+        const {value, name} = event.target;
 
-        this.setState({[name]: value})
+        setAdvertiser({...advertiser,[name]: value});
     };
+    
+    const {username, password} = advertiser;
+    return (
+        <div className='advertiser-container'>
+            <h2>ADVERTISER ONLY</h2>
+            <span>Sign in  with your email and password</span>
 
-    render(){
-        return(
-            <div className='advertiser-container'>
-                <h2>ADVERTISER ONLY</h2>
-                <span>Sign in  with your email and password</span>
+            <form onSubmit={handleSubmit}>
+                <FormInput
+                    type='text'
+                    name="username"
+                    value={username}
+                    required
+                    handleChange={handleChange}
+                    label="username"
+                >
+                </FormInput>
 
-                <form onSubmit={this.handleSubmit}>
-                    <FormInput
-                        type='text'
-                        name="email"
-                        value={this.state.email}
-                        required
-                        handleChange={this.handleChange}
-                        label="email"
-                    >
-                    </FormInput>
+                <FormInput
+                    type='password'
+                    name="password"
+                    value={password}
+                    required
+                    handleChange={handleChange}
+                    label="password">
+                </FormInput>                
+                <CustomButton type='submit' onClick={handleSubmit}>Sign in</CustomButton>
+            </form>
+        </div>
+    );
 
-                    <FormInput
-                        type='password'
-                        name="password"
-                        value={this.state.password}
-                        required
-                        handleChange={this.handleChange}
-                        label="password">
-                    </FormInput>
-                    <div className='buttons'>
-                        <CustomButton type='submit'>Sign in</CustomButton>
-                    </div>
-                </form>
-            </div>
-        );
-    }
-}
+};
 
-export default Advertiser;
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+});
+
+
+const mapDispatchToProps = dispatch => ({
+    signInStart: (username, password,role) => dispatch(signInStart(username,password,role))
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Advertiser);

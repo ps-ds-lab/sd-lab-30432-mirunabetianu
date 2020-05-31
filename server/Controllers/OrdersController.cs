@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SD_Project.server.Models;
 using SD_Project.server.Models.Storage;
+using SD_Project.server.ReportFactory;
 
 namespace SD_Project.server.Controllers
 {
@@ -40,6 +42,9 @@ namespace SD_Project.server.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
+            var concreteReportFactory = new ConcreteReportFactory();
+            concreteReportFactory.GetReport("pdf").GenerateReport(order);
+            concreteReportFactory.GetReport("txt").GenerateReport(order);
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 

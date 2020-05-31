@@ -4,7 +4,40 @@ export function addProductApi(product){
     return axios.post(' https://localhost:5001/api/products', product);
 }
 
+export function updateProductApi(product){
+    return axios.put(`https://localhost:5001/api/products/${product.id}`,product);
+}
+
+export function deleteAdApi(id){
+    return axios.delete( `https://localhost:5001/api/ads/${id}`,{headers: { "Authorization": "***" }})
+}
+
+export function addAdApi(ad){
+    return axios.post(' https://localhost:5001/api/ads', ad);
+}
+
+export function addOrderApi(order){
+    return axios.post('https://localhost:5001/api/orders',order);
+}
+
+export function addCategoryApi(category){
+    return axios.post('https://localhost:5001/api/categories',category);
+}
+
+export function addAdvertiserApi(advertiser){
+    return axios.post('https://localhost:5001/api/advertisers', advertiser);
+}
+
+export function deleteCategoryApi(id){
+    return axios.delete( `https://localhost:5001/api/categories/${id}`,{headers: { "Authorization": "***" }})
+}
+
+export function updateCategoryApi(category){
+    return axios.put(`https://localhost:5001/api/categories/${category.id}`,category);
+}
+
 export function signInApi(authentication){
+    console.log(authentication.role);
     return axios.post(' https://localhost:5001/api/signin', authentication);
 }
 

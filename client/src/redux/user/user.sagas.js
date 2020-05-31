@@ -14,20 +14,25 @@ import {signInApi, signUpApi} from "../../services/APIs";
 
 
 
-function* signIn({ payload: { username, password }}) {
+function* signIn({ payload: { username, password, role }}) {
     try{
         const authentication = {
             username: username,
-            password: password
+            password: password,
+            role: role
         };
-        localStorage.setItem("username", authentication.username);
-        localStorage.setItem("password", authentication.password);
+        console.log(authentication);
+        if(role === 'user')
+        {
+            console.log("aici");
+            localStorage.setItem("username", authentication.username);
+            localStorage.setItem("password", authentication.password);
+        }
         
-        console.log(localStorage.getItem("password"));
-
         let user = yield call(signInApi,authentication);
 
-        localStorage.setItem("token", user.data.token);
+        if(role === 'user')  localStorage.setItem("token", user.data.token);
+        else localStorage.setItem("mode", user.data.mode);
         
         yield put(signInSuccess(authentication));
     }catch(error){
@@ -40,15 +45,16 @@ function* onSignInStart() {
 }
 
 function* isUserAuthenticated() {
-    const payload = {
-        username: localStorage.getItem("username"),
-        password: localStorage.getItem("password")
-    };
-    console.log(payload);
-    localStorage.getItem("token") ?
-        yield put(signInSuccess(payload.username))
-        :
-        yield put(signInFailure('no user found'));
+    if(localStorage.getItem("mode") !== 'admin' || localStorage.getItem("mode") !== 'advertiser') {
+        const payload = {
+            username: localStorage.getItem("username"),
+            password: localStorage.getItem("password")
+        };
+        localStorage.getItem("token") ?
+            yield put(signInSuccess(payload.username))
+            :
+            yield put(signInFailure('no user found'));
+    }
 }
 
 function* onCheckUserSession() {
@@ -57,6 +63,9 @@ function* onCheckUserSession() {
 
 function* signOut() {
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+    localStorage.removeItem("mode");
     
     localStorage.getItem("token") ?
         yield put(signOutFailure('not signed out'))
