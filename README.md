@@ -31,6 +31,6 @@ The administrator can perform the following operations:
 - [x] frontend-backend communication through APIs
 - [x] added components, pages on frontend
 - [x] refactoring (added react-redux, redux-saga and react-hooks) 
-- [ ] implement factory method design pattern
-- [ ] add more functionalities to the backend: rating calculator and report generator
+- [x] implement factory method design pattern
+- [x] add more functionalities to the backend: rating calculator and report generator
 - [ ] introduction of web sockets
